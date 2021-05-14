@@ -149,14 +149,14 @@ function handleWin(arr) {
                 break
             }
             if (jIndex > arr1.length - 1) {
-                jIndex = 0
+                jIndex = index
                 index++
                 tempChances = chances - 1
                 // winArr = []
                 // console.log("run in jindex", tempChances)
             }
             if (index > arr.length - 1) {
-                if (tempChances == 0) {
+                if ((chance && arr.length >= num / 2 + 1) || (!chance && arr.length >= num / 2)) {
                     console.log("Draw")
                     draw = true
                     win = true
