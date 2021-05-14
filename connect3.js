@@ -82,7 +82,7 @@ function handleConnect3Matrix(input, arr) {
     return arr
 }
 function handleWin(arr) {
-    let charCheck = chance ? "#" : "$", winArr = []
+    let charCheck = chance ? "#" : "$"
     let tempChances = chances - 1, win = false
     arr = arr
         .filter(o => o.markedBy == charCheck)
@@ -122,24 +122,24 @@ function handleWin(arr) {
         tempChances = chances - 1
         let commonFound = false, jIndex = 1, index = 0, kIndex = 0, predictPos = [0, 0]
         while (!commonFound) {
-            // let initialPos = arr1[kIndex]
             let a = arr1[index].pos[0]
             let b = arr1[index].pos[1]
             let c = arr1[jIndex].pos[0]
             let d = arr1[jIndex].pos[1]
-            if ((predictPos[0] != c || predictPos[1] != d) && tempChances < 2) {
-                kIndex++
-                index = kIndex
-                jIndex = 0
-                tempChances = chances - 1
-                winArr = []
-                // console.log("run in predict", tempChances)
-            } else if (Math.abs(a - c) == 1 && Math.abs(b - d) == 1) {
-                predictPos[0] = c - 1
-                predictPos[1] = b - d < 0 ? d + 1 : d - 1
-                tempChances--
-                winArr.push(arr1[index])
-                index = jIndex
+            if (Math.abs(a - c) == 1 && Math.abs(b - d) == 1) {
+                if ((predictPos[0] != c || predictPos[1] != d) && tempChances < 2) {
+                    kIndex++
+                    index = kIndex
+                    jIndex = kIndex
+                    tempChances = chances - 1
+                    // console.log("run in predict", tempChances)
+                } else {
+                    predictPos[0] = c - 1
+                    predictPos[1] = b - d < 0 ? d + 1 : d - 1
+                    tempChances--
+                    index = jIndex
+                }
+                // console.log(a, b, c, d)
                 // console.log("run in subtract check", tempChances, predictPos)
             }
             jIndex++
@@ -152,7 +152,6 @@ function handleWin(arr) {
                 jIndex = index
                 index++
                 tempChances = chances - 1
-                // winArr = []
                 // console.log("run in jindex", tempChances)
             }
             if (index > arr.length - 1) {
@@ -165,25 +164,16 @@ function handleWin(arr) {
                 break;
             }
         }
-        // console.log(winArr)
-        // if (winArr.length < chances) {
-        //     return false
-        // }
-        // for (let i = 0; i < winArr.length - 1; i++) {
-        //     if (winArr[i].pos[0] != winArr[i + 1].pos[0] + 1) {
-        //         win = false
-        //         break
-        //     }
-        // }
     }
     return win
 }
 
 // console.log(
 //     handleWin([
-//         { pos: [5, 1], marked: true, markedBy: '#' },
-//         { pos: [5, 3], marked: true, markedBy: '#' },
-//         { pos: [4, 2], marked: true, markedBy: '#' },
-//         { pos: [3, 1], marked: true, markedBy: '#' }
+//         { pos: [5, 1], marked: true, markedBy: '$' },
+//         { pos: [5, 3], marked: true, markedBy: '$' },
+//         { pos: [4, 2], marked: true, markedBy: '$' },
+//         { pos: [3, 2], marked: true, markedBy: '$' },
+//         { pos: [3, 3], marked: true, markedBy: '$' }
 //     ])
 // )
