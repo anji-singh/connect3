@@ -1,8 +1,8 @@
-let num = 24
-let row = 5
+let num = 48
+let row = 7
 let chance = true
 let draw = false
-let chances = 3
+let chances = 4
 let connect3Matrix = [...Array(num).keys()]
     .map(k => k + 2)
     .reduce((acc, k) => {
@@ -88,7 +88,6 @@ function handleWin(arr) {
         .filter(o => o.markedBy == charCheck)
     let arr1 = [...arr].sort((a, b) => b.pos[0] - a.pos[0])
     let arr2 = [...arr].sort((a, b) => b.pos[1] - a.pos[1])
-    console.log(arr1)
     if (!win) {
         for (let i = 0; i < arr1.length - 1; i++) {
             if (arr1[i + 1].pos[0] == arr1[i].pos[0] && Math.abs(arr1[i + 1].pos[1] - arr1[i].pos[1]) == 1) {
@@ -98,7 +97,6 @@ function handleWin(arr) {
             }
             if (tempChances == 0) {
                 win = true
-                console.log("1")
                 break
             }
         }
@@ -113,7 +111,6 @@ function handleWin(arr) {
             }
             if (tempChances == 0) {
                 win = true
-                console.log("2")
                 break
             }
         }
@@ -132,27 +129,22 @@ function handleWin(arr) {
                     index = kIndex
                     jIndex = kIndex
                     tempChances = chances - 1
-                    // console.log("run in predict", tempChances)
                 } else {
                     predictPos[0] = c - 1
                     predictPos[1] = b - d < 0 ? d + 1 : d - 1
                     tempChances--
                     index = jIndex
                 }
-                // console.log(a, b, c, d)
-                // console.log("run in subtract check", tempChances, predictPos)
             }
             jIndex++
             if (tempChances == 0) {
                 win = true
-                console.log("3.1")
                 break
             }
             if (jIndex > arr1.length - 1) {
                 jIndex = index
                 index++
                 tempChances = chances - 1
-                // console.log("run in jindex", tempChances)
             }
             if (index > arr.length - 1) {
                 if ((chance && arr.length >= num / 2 + 1) || (!chance && arr.length >= num / 2)) {
@@ -160,20 +152,9 @@ function handleWin(arr) {
                     draw = true
                     win = true
                 }
-                console.log("3")
                 break;
             }
         }
     }
     return win
 }
-
-// console.log(
-//     handleWin([
-//         { pos: [5, 1], marked: true, markedBy: '$' },
-//         { pos: [5, 3], marked: true, markedBy: '$' },
-//         { pos: [4, 2], marked: true, markedBy: '$' },
-//         { pos: [3, 2], marked: true, markedBy: '$' },
-//         { pos: [3, 3], marked: true, markedBy: '$' }
-//     ])
-// )
